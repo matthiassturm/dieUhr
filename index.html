@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Die Uhr</title>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+	<style type="text/css">
+#time, #color{margin-top:200px; color:#fff; font:normal 200px Arial; text-shadow:0 0 10px #fff, 0 0 100px #fff; text-align:center;}
+#color{display:none;}
+	</style>
+</head>
+<body id="clock">
+	<!-- Die Uhr: Copyleft 2011 msturm.com - Original from http://thecolourclock.co.uk/ -->
+
+	<div id="time"></div>
+	<div id="color"></div>
+
+	<script type="text/javascript">
+(function($){
+	var $clock = $('#clock'),
+		$time = $('#time'),
+		$color = $('#color'),
+		$timeColor = $('#time, #color');
+
+	function dec2hex(n){
+		var nSrc = n;
+		n = n.toString(16).toUpperCase();
+		n = (nSrc < 16 ? '0' : '')+n;
+		return n;
+	}
+
+	function updateClock(){
+		var time = new Date();
+
+		var h = (time.getHours() < 10 ? '0' : '')+time.getHours(),
+			m = (time.getMinutes() < 10 ? '0' : '')+time.getMinutes(),
+			s = (time.getSeconds() < 10 ? '0' : '')+time.getSeconds();
+
+		var r = dec2hex(Math.round(h / 24 * 256)),
+			g = dec2hex(Math.round(m / 60 * 256)),
+			b = dec2hex(Math.round(s / 60 * 256));
+
+		$clock.css('backgroundColor', '#'+r+g+b);
+		$time.html(h+':'+m+':'+s);
+		$color.html(r+g+b);
+	}
+
+	$clock.click(function(){
+		$timeColor.toggle();
+	});
+
+	updateClock();
+	setInterval(function(){updateClock()}, 1000);
+})(jQuery);
+	</script>
+</body>
+</html>
